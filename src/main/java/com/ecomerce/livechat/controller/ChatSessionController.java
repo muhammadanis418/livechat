@@ -23,4 +23,6 @@ public class ChatSessionController {
         ChatSessionDTO dto = chatSessionService.createSession(userId);
         return ResponseEntity.ok(dto);
     }
+
+
 }
