@@ -4,12 +4,12 @@ import com.ecomerce.livechat.dto.ChatMessageDTO;
 import com.ecomerce.livechat.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RequiredArgsConstructor
-@RestController("save-message")
+@RestController()
 @RequestMapping
 public class ChatMessageController {
     private final ChatMessageService chatMessageService;
@@ -18,5 +18,10 @@ public class ChatMessageController {
     public ResponseEntity<ChatMessageDTO> saveMessage(@RequestBody ChatMessageDTO chatMessageDTO){
       ChatMessageDTO dto=  chatMessageService.saveMessage(chatMessageDTO);
         return ResponseEntity.ok(dto);
+    }
+    @GetMapping("/recieve")
+    public ResponseEntity<List<ChatMessageDTO>>recieveMessage(@RequestParam String sessionId){
+      List<ChatMessageDTO>messageDTOList=  chatMessageService.recieveMessage(sessionId);
+        return ResponseEntity.ok(messageDTOList);
     }
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="chat_session")
@@ -14,10 +15,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ChatSession {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "chat_session_id", nullable = false,unique = true)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+   // @Column(name = "chat_session_id", nullable = false,unique = true)
+    private String sessionId;
     private String userId;
     private LocalDateTime createdAt;
     private String status;
+
+//    @OneToMany(mappedBy ="session", cascade = CascadeType.ALL)
+//    private List<ChatMessage> messages;
 }
