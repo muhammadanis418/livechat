@@ -8,9 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @RestController()
-@RequestMapping
+@RequiredArgsConstructor
 public class ChatMessageController {
     private final ChatMessageService chatMessageService;
 
@@ -21,7 +20,7 @@ public class ChatMessageController {
     }
     @GetMapping("/recieve")
     public ResponseEntity<List<ChatMessageDTO>>recieveMessage(@RequestParam String sessionId){
-      List<ChatMessageDTO>messageDTOList=  chatMessageService.recieveMessage(sessionId);
+      List<ChatMessageDTO>messageDTOList=  chatMessageService.receiveMessage(sessionId);
         return ResponseEntity.ok(messageDTOList);
     }
 }

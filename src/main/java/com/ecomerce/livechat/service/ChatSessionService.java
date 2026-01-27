@@ -22,7 +22,7 @@ public class ChatSessionService {
 
         try {
             ChatSession chatSession = new ChatSession();
-            chatSession.setUserId(UUID.randomUUID().toString());
+            chatSession.setSessionId(UUID.randomUUID().toString());
             chatSession.setUserId(userId);
             chatSession.setCreatedAt(LocalDateTime.now());
             chatSession.setStatus("OPEN");

@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ChatMessage {
     @Id
-// @GeneratedValue(strategy = GenerationType.UUID)
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "session_id",nullable = false)
     private ChatSession session;
-    private String senderId; // user or support
+  //  private String senderId; // user or support
    // @Column(length = 2000)
     private String content;
     private LocalDateTime timestamp= LocalDateTime.now();

@@ -8,7 +8,6 @@ import com.ecomerce.livechat.repository.ChatSessionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import tools.jackson.databind.ObjectMapper;
 
 import java.time.LocalDateTime;
@@ -24,13 +23,11 @@ public class ChatMessageService {
 
 
     public ChatMessageDTO saveMessage(ChatMessageDTO chatMessageDTO) {
-
+        System.out.println(chatMessageDTO.sessionId());
         ChatSession chatSession = chatSessionRepository.findById(chatMessageDTO.sessionId()).orElseThrow(() -> new RuntimeException("Invalid session id"));
         ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setId(chatMessage.getId());
         chatMessage.setSession(chatSession);
-        chatMessage.setSenderId(chatMessage.getSenderId());
-        chatMessage.setContent(chatMessage.getContent());
+        chatMessage.setContent(chatMessageDTO.content());
         chatMessage.setTimestamp(LocalDateTime.now());
 
         ChatMessage saved = chatMessageRepository.save(chatMessage);
@@ -40,12 +37,12 @@ public class ChatMessageService {
 
     }
 
-    public List<ChatMessageDTO> recieveMessage(String sessionId){
+    public List<ChatMessageDTO> receiveMessage(String sessionId){
 
         if (sessionId == null || sessionId.isEmpty()) {
             throw new RuntimeException("Session Id cannot be empty");
         }
-            List<ChatMessage> messages = chatMessageRepository.findBySessionIdOrderByTimestampAsc(sessionId);
-            return messages.stream().map(message->new ChatMessageDTO(message.getId(), message.getContent(), message.getSenderId(),message.getSession().getSessionId())).toList();
+            List<ChatMessage> messages = chatMessageRepository.findBySession_SessionId(sessionId);
+            return messages.stream().map(message->new ChatMessageDTO(message.getId(),message.getSession().getSessionId(),message.getContent())).toList();
     }
 }
